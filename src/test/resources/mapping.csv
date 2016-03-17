@@ -1,0 +1,5 @@
+searge,name,side,desc
+field_100013_f,isPotionDurationMax,0,"True if potion effect duration is at maximum, false otherwise."
+field_104003_g,isAggressive,0,
+field_104057_T,isGamemodeForced,0,
+field_104058_d,theMainMenu,0,

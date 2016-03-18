@@ -24,7 +24,7 @@ public class DeobfuscateImplTest {
         mappings.put("a2", "integer2");
 
         Deobfuscate deobfuscate = new DeobfuscateImpl(mappings);
-        deobfuscate.read(getClass().getResourceAsStream("/ru/ensemplix/deobf/DeobfuscateImplTest$Simple.class"));
+        deobfuscate.read(getClass().getResourceAsStream("/ru/ensemplix/Dummy.class"));
         byte[] bytes;
 
         try(ByteArrayOutputStream out = new ByteArrayOutputStream()) {
@@ -56,25 +56,6 @@ public class DeobfuscateImplTest {
         assertEquals("integer", ((FieldInsnNode) instructions.get(4)).name);
         assertEquals("bool", ((MethodInsnNode) instructions.get(9)).name);
         assertEquals("bool", ((FieldInsnNode) instructions2.get(4)).name);
-    }
-
-    public class Simple {
-
-        private int a;
-
-        private boolean b;
-
-        private String c;
-
-        public void a(int a2) {
-            this.a = a2;
-            b(true);
-        }
-
-        public void b(boolean b) {
-            this.b = b;
-        }
-
     }
 
 }

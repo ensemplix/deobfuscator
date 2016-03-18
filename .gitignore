@@ -1,6 +1,7 @@
 .idea
 .gradle
 build
+deobf
 out
 *.iml
 *.ipr

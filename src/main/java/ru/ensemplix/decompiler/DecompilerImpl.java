@@ -10,6 +10,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.Manifest;
 import java.util.zip.ZipFile;
@@ -21,10 +22,11 @@ public class DecompilerImpl implements Decompiler {
     private final Fernflower fernflower;
 
     public DecompilerImpl() {
-        this(IFernflowerPreferences.getDefaults());
-    }
+        Map<String, Object> options = new HashMap<>();
+        options.putAll(IFernflowerPreferences.getDefaults());
+        options.put("dgs", "1");
+        options.put("ind", "    ");
 
-    public DecompilerImpl(Map<String, Object> options) {
         this.fernflower = new Fernflower(new BytecodeProvider(), new ResultSaver(), options, new ResultLogger());
     }
 
@@ -128,6 +130,10 @@ public class DecompilerImpl implements Decompiler {
         @Override
         public void saveClassEntry(String path, String name, String qualified, String entry, String content) {
             try {
+                if(entry.contains("package-info")) {
+                    return;
+                }
+
                 Path dest = src.resolve(entry);
                 Files.createDirectories(dest.getParent());
 

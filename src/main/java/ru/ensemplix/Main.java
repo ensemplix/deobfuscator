@@ -56,8 +56,6 @@ public class Main {
         mappings.putAll(mapping("/mappings/" + info.getMcversion() + "/methods.csv"));
         mappings.putAll(mapping("/mappings/" + info.getMcversion() + "/params.csv"));
 
-        System.out.println(mapping("/mappings/" + info.getMcversion() + "/params.csv").size());
-
         if(mappings.isEmpty()) {
             System.out.println("Not found mappings for " + info.getMcversion() + " minecraft");
             return;

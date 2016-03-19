@@ -1,4 +1,4 @@
-package ru.ensemplix.deobf;
+package ru.ensemplix.deobfuscator;
 
 import org.junit.Test;
 import org.objectweb.asm.ClassReader;
@@ -12,23 +12,23 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class DeobfuscateImplTest {
+public class DeobfuscatorImplTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testDeobfuscate() throws IOException {
+    public void testDeobfuscator() throws IOException {
         Map<String, String> mappings = new HashMap<>();
         mappings.put("a", "integer");
         mappings.put("b", "bool");
         mappings.put("c", "string");
         mappings.put("a2", "integer2");
 
-        Deobfuscate deobfuscate = new DeobfuscateImpl(mappings);
-        deobfuscate.read(getClass().getResourceAsStream("/ru/ensemplix/Dummy.class"));
+        Deobfuscator deobfuscator = new DeobfuscatorImpl(mappings);
+        deobfuscator.read(getClass().getResourceAsStream("/ru/ensemplix/Dummy.class"));
         byte[] bytes;
 
         try(ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            deobfuscate.write(out);
+            deobfuscator.write(out);
             bytes = out.toByteArray();
         }
 

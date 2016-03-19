@@ -1,4 +1,4 @@
-package ru.ensemplix.decomp;
+package ru.ensemplix.decompiler;
 
 import org.jetbrains.java.decompiler.main.Fernflower;
 import org.jetbrains.java.decompiler.main.extern.IBytecodeProvider;
@@ -46,6 +46,8 @@ public class DecompilerImpl implements Decompiler {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
 
             try(ZipFile zip = new ZipFile(file)) {
+                System.out.print("\r\t" + cls);
+
                 try(InputStream in = zip.getInputStream(zip.getEntry(cls))) {
                     while(in.available() > 0) {
                         out.write(in.read());
@@ -110,7 +112,7 @@ public class DecompilerImpl implements Decompiler {
                 Path dest = resources.resolve(entry);
                 Files.createDirectories(dest.getParent());
 
-                FileOutputStream out = new FileOutputStream(dest.toFile());
+                OutputStream out = Files.newOutputStream(dest);
 
                 try(InputStream in = zip.getInputStream(zip.getEntry(entry))) {
                     while(in.available() > 0) {
@@ -130,8 +132,10 @@ public class DecompilerImpl implements Decompiler {
                 Path dest = src.resolve(entry);
                 Files.createDirectories(dest.getParent());
 
-                try (FileWriter writer = new FileWriter(dest.toFile())) {
-                    writer.write(content);
+                if(content != null) {
+                    try (BufferedWriter writer = Files.newBufferedWriter(dest)) {
+                        writer.write(content);
+                    }
                 }
             } catch(IOException e) {
                 throw new RuntimeException(e);

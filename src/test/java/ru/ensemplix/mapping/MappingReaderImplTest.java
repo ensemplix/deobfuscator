@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 public class MappingReaderImplTest {
 
     @Test
-    public void testReader() throws URISyntaxException, IOException {
+    public void testMappingReader() throws URISyntaxException, IOException {
         Path path = Paths.get(getClass().getResource("/mapping.csv").toURI());
         MappingReader reader = new MappingReaderImpl();
 

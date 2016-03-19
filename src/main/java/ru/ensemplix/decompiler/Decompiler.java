@@ -1,4 +1,4 @@
-package ru.ensemplix.decomp;
+package ru.ensemplix.decompiler;
 
 import java.nio.file.Path;
 

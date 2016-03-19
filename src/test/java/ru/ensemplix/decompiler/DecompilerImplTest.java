@@ -1,4 +1,4 @@
-package ru.ensemplix.decomp;
+package ru.ensemplix.decompiler;
 
 import org.junit.Test;
 
@@ -8,12 +8,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.junit.Assert.assertEquals;
-import static ru.ensemplix.decomp.DecompilerImpl.DECOMPILER_RESULT_FOLDER;
+import static ru.ensemplix.decompiler.DecompilerImpl.DECOMPILER_RESULT_FOLDER;
 
 public class DecompilerImplTest {
 
     @Test
-    public void testDecompile() throws URISyntaxException, IOException {
+    public void testDecompiler() throws URISyntaxException, IOException {
         Path path = Paths.get(getClass().getResource("/dummy.jar").toURI());
 
         Decompiler decompiler = new DecompilerImpl();

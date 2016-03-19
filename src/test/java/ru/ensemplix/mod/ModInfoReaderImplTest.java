@@ -15,7 +15,7 @@ public class ModInfoReaderImplTest {
     private final ModInfoReader reader = new ModInfoReaderImpl();
 
     @Test
-    public void testReader() throws URISyntaxException, IOException {
+    public void testModInfoReader() throws URISyntaxException, IOException {
         Path path = Paths.get(getClass().getResource("/modinfo.jar").toURI());
         ModInfo info = reader.getInfo(path);
 

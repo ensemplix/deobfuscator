@@ -111,7 +111,6 @@ public class DecompilerImpl implements Decompiler {
             try(ZipFile zip = new ZipFile(source)) {
                 Path dest = resources.resolve(entry);
                 Files.createDirectories(dest.getParent());
-
                 OutputStream out = Files.newOutputStream(dest);
 
                 try(InputStream in = zip.getInputStream(zip.getEntry(entry))) {

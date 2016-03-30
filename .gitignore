@@ -3,6 +3,7 @@
 build
 deobf
 out
+*.jar
 *.iml
 *.ipr
 *.iws

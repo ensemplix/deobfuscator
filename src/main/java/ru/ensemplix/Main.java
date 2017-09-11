@@ -12,6 +12,7 @@ import ru.ensemplix.mod.ModInfoReaderImpl;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,6 +28,7 @@ import static ru.ensemplix.deobfuscator.Deobfuscator.Result;
 import static ru.ensemplix.deobfuscator.Deobfuscator.Type;
 
 public class Main {
+    private static final MappingReader reader = new MappingReaderImpl();
 
     public static void main(String[] args) throws Exception {
         if(args.length == 0) {
@@ -52,16 +54,24 @@ public class Main {
         System.out.println("Deobfuscating " + info.getName());
 
         Map<String, String> mappings = new HashMap<>();
-        mappings.putAll(mapping("/mappings/" + info.getMcversion() + "/fields.csv"));
-        mappings.putAll(mapping("/mappings/" + info.getMcversion() + "/methods.csv"));
-        mappings.putAll(mapping("/mappings/" + info.getMcversion() + "/params.csv"));
+        String mcVersion = info.getMcversion();
+
+        if(mcVersion == null) {
+            System.out.println("Mod info has absent minecraft version");
+            //return;
+            mcVersion = "1.7.10";
+        }
+
+        mappings.putAll(mapping("/mappings/" + mcVersion + "/fields.csv"));
+        mappings.putAll(mapping("/mappings/" + mcVersion + "/methods.csv"));
+        mappings.putAll(mapping("/mappings/" + mcVersion + "/params.csv"));
 
         if(mappings.isEmpty()) {
-            System.out.println("Not found mappings for " + info.getMcversion() + " minecraft");
+            System.out.println("Not found mappings for " + mcVersion + " minecraft");
             return;
         }
 
-        System.out.println("Loaded " + mappings.size() + " mappings for " + info.getMcversion() + " minecraft");
+        System.out.println("Loaded " + mappings.size() + " mappings for " + mcVersion + " minecraft");
         System.out.println("Renaming fields and methods");
 
 
@@ -124,13 +134,13 @@ public class Main {
     }
 
     public static Map<String, String> mapping(String name) throws Exception {
-        Path path = Paths.get(Main.class.getResource(name).toURI());
+        URL resource = Main.class.getResource(name);
 
-        if(Files.notExists(path)) {
+        if(resource == null) {
             return Collections.emptyMap();
         }
 
-        MappingReader reader = new MappingReaderImpl();
+        Path path = Paths.get(resource.toURI());
         return reader.getMapping(path);
     }
 
